@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
+import type { ReactNode } from 'react'
+import { ThemeProvider } from 'next-themes'
 import { Header } from './header'
 import { Footer } from './footer'
-import { ThemeProvider } from 'next-themes'
-import type { ReactNode } from 'react'
+import './globals.css'
+
+// ============================================================================
+// Viewport Configuration
+// ============================================================================
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -16,17 +20,28 @@ export const viewport: Viewport = {
   ],
 }
 
+// ============================================================================
+// Metadata Configuration
+// ============================================================================
+
+const SITE_CONFIG = {
+  name: 'thom ★',
+  url: 'https://thom.lol',
+  description:
+    'Website pessoal de Thom, estudante em Portugal interessado em história, política e tecnologia.',
+  locale: 'pt_PT',
+} as const
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://thom.lol'),
+  metadataBase: new URL(SITE_CONFIG.url),
   alternates: {
     canonical: '/',
   },
   title: {
-    default: 'thom ★',
-    template: '%s · thom',
+    default: SITE_CONFIG.name,
+    template: `%s · thom`,
   },
-  description:
-    'Website pessoal de Thom, estudante em Portugal interessado em história, política e tecnologia.',
+  description: SITE_CONFIG.description,
   keywords: [
     'thom',
     'portugal',
@@ -36,32 +51,43 @@ export const metadata: Metadata = {
     'blog pessoal',
   ],
   authors: [{ name: 'thom' }],
+  creator: 'thom',
   openGraph: {
     type: 'website',
-    locale: 'pt_PT',
-    url: 'https://thom.lol',
-    siteName: 'thom ★',
-    title: 'thom ★',
-    description:
-      'Website pessoal de Thom, estudante em Portugal interessado em história, política e tecnologia.',
+    locale: SITE_CONFIG.locale,
+    url: SITE_CONFIG.url,
+    siteName: SITE_CONFIG.name,
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'thom ★',
-    description:
-      'Website pessoal de Thom, estudante em Portugal interessado em história, política e tecnologia.',
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
+
+// ============================================================================
+// Font Configuration
+// ============================================================================
 
 const geist = Geist({
   variable: '--font-geist',
   subsets: ['latin'],
   display: 'swap',
   preload: true,
+  adjustFontFallback: true,
 })
 
 const geistMono = Geist_Mono({
@@ -69,7 +95,12 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
   display: 'swap',
   preload: true,
+  adjustFontFallback: true,
 })
+
+// ============================================================================
+// Layout Component
+// ============================================================================
 
 interface RootLayoutProps {
   children: ReactNode
@@ -77,7 +108,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="pt-PT" suppressHydrationWarning>
+    <html lang={SITE_CONFIG.locale} suppressHydrationWarning>
       <body
         className={`${geist.variable} ${geistMono.variable} min-h-screen bg-white font-sans tracking-tight text-zinc-900 antialiased transition-colors dark:bg-zinc-950 dark:text-zinc-100`}
       >
@@ -89,10 +120,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
           storageKey="thom-theme"
         >
           <div className="flex min-h-screen flex-col">
-            {/* skip link (acessibilidade) */}
+            {/* Skip to main content link for accessibility */}
             <a
               href="#main-content"
-              className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-zinc-900 focus:px-4 focus:py-2 focus:text-white focus:ring-2 focus:ring-zinc-400 focus:outline-none dark:focus:bg-zinc-100 dark:focus:text-zinc-900"
+              className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:rounded-md focus-visible:bg-zinc-900 focus-visible:px-4 focus-visible:py-2 focus-visible:text-white focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:bg-zinc-100 dark:focus-visible:text-zinc-900"
             >
               Saltar para o conteúdo principal
             </a>
@@ -100,11 +131,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="mx-auto w-full max-w-screen-sm flex-1 px-4 pt-14 pb-16 sm:px-6">
               <Header />
 
-              <main
-                id="main-content"
-                className="focus:outline-none"
-                tabIndex={-1}
-              >
+              <main id="main-content" className="outline-none" tabIndex={-1}>
                 {children}
               </main>
 

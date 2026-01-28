@@ -8,6 +8,7 @@ export type BlogPost = {
 export type SocialLink = {
   label: string
   link: string
+  icon: string
 }
 
 /* blog */
@@ -33,14 +34,17 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'github',
     link: 'https://github.com/thom0x0',
+    icon: 'iconoir:github',
   },
   {
     label: 'twitter',
     link: 'https://x.com/thom0x0',
+    icon: 'iconoir:twitter',
   },
   {
     label: 'instagram',
     link: 'https://www.instagram.com/thom0x0',
+    icon: 'iconoir:instagram',
   },
 ]
 
