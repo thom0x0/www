@@ -15,7 +15,7 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
 
-  reactStrictMode: true,
+  reactStrictMode: false,
   compress: true,
   productionBrowserSourceMaps: false,
 
