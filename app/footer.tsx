@@ -11,7 +11,7 @@ import { EMAIL, SOCIAL_LINKS } from '@/app/data'
 interface ThemeOption {
   label: string
   id: 'light' | 'dark' | 'system'
-  icon: JSX.Element
+  icon: React.ReactElement
 }
 
 const THEMES_OPTIONS: readonly ThemeOption[] = [
@@ -43,7 +43,8 @@ const ThemeSwitch = memo(function ThemeSwitch() {
   }, [])
 
   const handleThemeChange = useCallback(
-    (newTheme: string) => {
+    (newTheme: string | null) => {
+      if (!newTheme) return
       setTheme(newTheme)
     },
     [setTheme],
