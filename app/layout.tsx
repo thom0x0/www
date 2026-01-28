@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { ThemeProvider } from 'next-themes'
 import { Header } from './header'
 import { Footer } from './footer'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 
 export const viewport: Viewport = {
@@ -19,7 +20,8 @@ export const viewport: Viewport = {
 const SITE_CONFIG = {
   name: 'thom ★',
   url: 'https://thom.lol',
-  description: 'bem-vindo ao meu espaço pessoal na internet. aqui partilho as minhas ideias sobre história, política, tecnologia e muito mais.',
+  description:
+    'bem-vindo ao meu espaço pessoal na internet. aqui partilho as minhas ideias sobre história, política, tecnologia e muito mais.',
   locale: 'pt_PT',
 } as const
 
@@ -31,7 +33,14 @@ export const metadata: Metadata = {
     template: `%s · thom`,
   },
   description: SITE_CONFIG.description,
-  keywords: ['thom', 'portugal', 'história', 'política', 'tecnologia', 'blog pessoal'],
+  keywords: [
+    'thom',
+    'portugal',
+    'história',
+    'política',
+    'tecnologia',
+    'blog pessoal',
+  ],
   authors: [{ name: 'thom' }],
   creator: 'thom',
   openGraph: {
@@ -96,6 +105,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={`${geist.variable} ${geistMono.variable} min-h-screen bg-white font-sans tracking-tight text-zinc-900 antialiased transition-colors dark:bg-zinc-950 dark:text-zinc-100`}
       >
+        <SpeedInsights />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
