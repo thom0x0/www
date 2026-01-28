@@ -1,58 +1,156 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
+import type { ReactNode } from 'react'
+import { ThemeProvider } from 'next-themes'
 import { Header } from './header'
 import { Footer } from './footer'
-import { ThemeProvider } from 'next-themes'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import './globals.css'
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#ffffff',
+  maximumScale: 5,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#09090b' },
+  ],
 }
 
+const SITE_CONFIG = {
+  name: 'thom ★',
+  url: 'https://thom.lol',
+  description:
+    'bem-vindo ao meu espaço pessoal na internet. aqui partilho as minhas ideias sobre história, política, tecnologia e muito mais.',
+  locale: 'pt_PT',
+} as const
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nim-fawn.vercel.app/'),
-  alternates: {
-    canonical: '/'
-  },
+  metadataBase: new URL(SITE_CONFIG.url),
+  alternates: { canonical: '/' },
   title: {
-    default: 'Nim - Personal website template',
-    template: '%s | Nim'
+    default: SITE_CONFIG.name,
+    template: `%s · thom`,
   },
-  description:  'Nim is a free and open-source personal website template built with Next.js 15, React 19 and Motion-Primitives.',
-};
+  description: SITE_CONFIG.description,
+  keywords: [
+    'thom',
+    'portugal',
+    'história',
+    'política',
+    'tecnologia',
+    'blog pessoal',
+  ],
+  authors: [{ name: 'thom' }],
+  creator: 'thom',
+  manifest: '/manifest.json',
+  icons: {
+    icon: [
+      {
+        url: '/src/favicons/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/src/favicons/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+    ],
+    apple: [
+      {
+        url: '/src/favicons/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
+  openGraph: {
+    type: 'website',
+    locale: SITE_CONFIG.locale,
+    url: SITE_CONFIG.url,
+    siteName: SITE_CONFIG.name,
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+}
 
 const geist = Geist({
   variable: '--font-geist',
   subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true,
+  weight: ['400', '500', '600'],
 })
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true,
+  weight: ['400', '500'],
 })
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+interface RootLayoutProps {
+  children: ReactNode
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={SITE_CONFIG.locale} suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
-        className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
+        className={`${geist.variable} ${geistMono.variable} min-h-screen bg-white font-sans tracking-tight text-zinc-900 antialiased transition-colors dark:bg-zinc-950 dark:text-zinc-100`}
       >
+        <SpeedInsights />
         <ThemeProvider
-          enableSystem={true}
           attribute="class"
-          storageKey="theme"
           defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange={false}
+          storageKey="thom-theme"
+          enableColorScheme
         >
-          <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
-            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20">
+          <div className="flex min-h-screen flex-col">
+            <a
+              href="#main-content"
+              className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:rounded-md focus-visible:bg-zinc-900 focus-visible:px-4 focus-visible:py-2 focus-visible:text-white focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:bg-zinc-100 dark:focus-visible:text-zinc-900"
+            >
+              Saltar para o conteúdo principal
+            </a>
+
+            <div className="mx-auto w-full max-w-screen-sm flex-1 px-4 pt-14 pb-16 sm:px-6">
               <Header />
-              {children}
+
+              <main id="main-content" className="outline-none" tabIndex={-1}>
+                {children}
+              </main>
+
               <Footer />
             </div>
           </div>
