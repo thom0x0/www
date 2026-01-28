@@ -33,16 +33,37 @@ export const metadata: Metadata = {
     template: `%s · thom`,
   },
   description: SITE_CONFIG.description,
-  keywords: ['thom', 'portugal', 'história', 'política', 'tecnologia', 'blog pessoal'],
+  keywords: [
+    'thom',
+    'portugal',
+    'história',
+    'política',
+    'tecnologia',
+    'blog pessoal',
+  ],
   authors: [{ name: 'thom' }],
   creator: 'thom',
   manifest: '/manifest.json',
   icons: {
     icon: [
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      {
+        url: '/src/favicons/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/src/favicons/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
     ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    apple: [
+      {
+        url: '/src/favicons/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
   },
   openGraph: {
     type: 'website',
