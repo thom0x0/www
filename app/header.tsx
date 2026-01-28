@@ -13,8 +13,7 @@ const AVATAR_CONFIG = {
 
 const SITE_INFO = {
   name: 'thom ★',
-  tagline:
-    "In a world without life and death, people who don't know when to give up are unstoppable.",
+  tagline: "In a world without life and death, people who don't know when to give up are unstoppable.",
 } as const
 
 const Avatar = memo(function Avatar() {
@@ -42,7 +41,6 @@ const SiteIdentity = memo(function SiteIdentity() {
       >
         {SITE_INFO.name}
       </Link>
-
       <TextEffect
         as="p"
         preset="fade"
@@ -55,6 +53,7 @@ const SiteIdentity = memo(function SiteIdentity() {
     </div>
   )
 })
+
 export const Header = memo(function Header() {
   return (
     <header

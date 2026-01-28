@@ -11,8 +11,6 @@ export type SocialLink = {
   icon: string
 }
 
-/* social */
-
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'github',
@@ -30,7 +28,5 @@ export const SOCIAL_LINKS: SocialLink[] = [
     icon: 'iconoir:instagram',
   },
 ]
-
-/* contato */
 
 export const EMAIL = 'hi@thom.lol'

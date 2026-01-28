@@ -19,29 +19,19 @@ export const viewport: Viewport = {
 const SITE_CONFIG = {
   name: 'thom ★',
   url: 'https://thom.lol',
-  description:
-    'bem-vindo ao meu espaço pessoal na internet. aqui partilho as minhas ideias sobre história, política, tecnologia e muito mais.',
+  description: 'bem-vindo ao meu espaço pessoal na internet. aqui partilho as minhas ideias sobre história, política, tecnologia e muito mais.',
   locale: 'pt_PT',
 } as const
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
-  alternates: {
-    canonical: '/',
-  },
+  alternates: { canonical: '/' },
   title: {
     default: SITE_CONFIG.name,
     template: `%s · thom`,
   },
   description: SITE_CONFIG.description,
-  keywords: [
-    'thom',
-    'portugal',
-    'história',
-    'política',
-    'tecnologia',
-    'blog pessoal',
-  ],
+  keywords: ['thom', 'portugal', 'história', 'política', 'tecnologia', 'blog pessoal'],
   authors: [{ name: 'thom' }],
   creator: 'thom',
   openGraph: {
