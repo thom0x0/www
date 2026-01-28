@@ -69,7 +69,7 @@ const CopyButton = memo(function CopyButton() {
     try {
       await navigator.clipboard.writeText(url)
       setCopied(true)
-    } catch (error) {
+    } catch {
       const textArea = document.createElement('textarea')
       textArea.value = url
       textArea.style.position = 'fixed'
