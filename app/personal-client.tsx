@@ -5,10 +5,7 @@ import { motion } from 'motion/react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 import { AnimatedBackground } from '@/components/ui/animated-background'
-
-// ============================================================================
-// Types
-// ============================================================================
+import Image from 'next/image'
 
 type BlogPost = {
   uid: string
@@ -20,64 +17,46 @@ type BlogPost = {
 interface PersonalClientProps {
   posts: BlogPost[]
 }
-
-// ============================================================================
-// Animation Variants
-// ============================================================================
-
 const VARIANTS = {
   container: {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.1,
+        staggerChildren: 0.08,
+        delayChildren: 0.05,
       },
     },
   },
   section: {
-    hidden: { opacity: 0, y: 20, filter: 'blur(10px)' },
+    hidden: { opacity: 0, y: 15, filter: 'blur(4px)' },
     visible: {
       opacity: 1,
       y: 0,
       filter: 'blur(0px)',
       transition: {
-        duration: 0.6,
+        duration: 0.4,
         ease: [0.22, 1, 0.36, 1],
       },
     },
   },
-  badge: {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: [0.34, 1.56, 0.64, 1],
-      },
-    },
-  },
 } as const
-
-// ============================================================================
-// Banner Section
-// ============================================================================
-
 const BannerImage = memo(function BannerImage() {
   return (
     <motion.div
       variants={VARIANTS.section}
       className="relative mx-auto w-full max-w-3xl space-y-6"
     >
-      {/* Banner Image with Enhanced Effects */}
+      {/* Banner Image com Next.js Image para otimização automática */}
       <div className="group relative aspect-[16/7] overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-zinc-100 to-zinc-50 dark:from-zinc-900 dark:to-zinc-950">
-        <img
+        <Image
           src="/src/banner.webp"
           alt="Banner do website"
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          loading="eager"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 768px, 768px"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          priority
+          quality={85}
         />
 
         {/* Gradient Overlays */}
@@ -89,30 +68,25 @@ const BannerImage = memo(function BannerImage() {
   )
 })
 
-// ============================================================================
-// Introduction Section - REDESIGNED
-// ============================================================================
+const INTERESTS = [
+  { icon: 'ph:book-open-duotone', text: 'história' },
+  { icon: 'ph:scales-duotone', text: 'política' },
+  { icon: 'ph:code-duotone', text: 'tecnologia' },
+] as const
+
+const ACTIVITIES = [
+  { icon: 'ph:book-duotone', text: 'lendo' },
+  { icon: 'ph:television-duotone', text: 'assistindo animes' },
+  { icon: 'ph:game-controller-duotone', text: 'jogando' },
+  { icon: 'ph:chats-circle-duotone', text: 'conversando com amigos' },
+] as const
 
 const IntroSection = memo(function IntroSection() {
-  const interests = [
-    { icon: 'ph:book-open-duotone', text: 'história' },
-    { icon: 'ph:scales-duotone', text: 'política' },
-    { icon: 'ph:code-duotone', text: 'tecnologia' },
-  ]
-
-  const activities = [
-    { icon: 'ph:book-duotone', text: 'lendo' },
-    { icon: 'ph:television-duotone', text: 'assistindo animes' },
-    { icon: 'ph:game-controller-duotone', text: 'jogando' },
-    { icon: 'ph:chats-circle-duotone', text: 'conversando com amigos' },
-  ]
-
   return (
     <motion.section
       variants={VARIANTS.section}
       className="mx-auto max-w-2xl space-y-8"
     >
-      {/* texto principal */}
       <div className="space-y-3">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
           olá, sou o thom
@@ -127,39 +101,36 @@ const IntroSection = memo(function IntroSection() {
           amigos.
         </p>
       </div>
-
-      {/* interesses */}
       <div className="space-y-3">
         <h2 className="text-xs font-medium tracking-widest text-zinc-500 uppercase">
           interesses
         </h2>
 
         <div className="flex flex-wrap gap-3">
-          {interests.map((item) => (
+          {INTERESTS.map((item) => (
             <span
               key={item.text}
               className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-2 text-sm text-zinc-700 ring-1 ring-zinc-900/5 dark:bg-zinc-800 dark:text-zinc-300 dark:ring-white/10"
             >
-              <Icon icon={item.icon} className="h-4 w-4" />
+              <Icon icon={item.icon} className="h-4 w-4" aria-hidden="true" />
               {item.text}
             </span>
           ))}
         </div>
       </div>
 
-      {/* atividades */}
       <div className="space-y-3">
         <h2 className="text-xs font-medium tracking-widest text-zinc-500 uppercase">
           no tempo livre
         </h2>
 
         <div className="flex flex-wrap gap-3">
-          {activities.map((item) => (
+          {ACTIVITIES.map((item) => (
             <span
               key={item.text}
               className="inline-flex items-center gap-2 rounded-full text-sm text-zinc-500 dark:text-zinc-400"
             >
-              <Icon icon={item.icon} className="h-4 w-4" />
+              <Icon icon={item.icon} className="h-4 w-4" aria-hidden="true" />
               {item.text}
             </span>
           ))}
@@ -168,10 +139,6 @@ const IntroSection = memo(function IntroSection() {
     </motion.section>
   )
 })
-
-// ============================================================================
-// Blog Section - Enhanced
-// ============================================================================
 
 const BlogSection = memo(function BlogSection({
   posts,
@@ -189,6 +156,7 @@ const BlogSection = memo(function BlogSection({
           <Icon
             icon="ph:newspaper-duotone"
             className="h-7 w-7 text-zinc-500 dark:text-zinc-400"
+            aria-hidden="true"
           />
           blog
         </h2>
@@ -198,12 +166,10 @@ const BlogSection = memo(function BlogSection({
           ficam rodando na minha cabeça.
         </p>
       </div>
-
-      {/* Posts */}
       <AnimatedBackground
         enableHover
         className="rounded-2xl bg-zinc-100/60 p-1.5 ring-1 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-900/60 dark:ring-white/10"
-        transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
+        transition={{ type: 'spring', bounce: 0, duration: 0.25 }} // Reduzido de 0.3
       >
         <ul
           className="flex flex-col divide-y divide-zinc-200/60 dark:divide-zinc-800/60"
@@ -214,6 +180,7 @@ const BlogSection = memo(function BlogSection({
               <Link
                 href={post.link}
                 className="group block rounded-xl px-5 py-4 transition-colors outline-none hover:bg-zinc-200/50 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:hover:bg-zinc-800/50 dark:focus-visible:ring-zinc-600"
+                prefetch={false} // Adicionar prefetch condicional
               >
                 <div className="space-y-1">
                   <h3 className="font-medium text-zinc-900 transition-colors group-hover:text-zinc-700 dark:text-zinc-100 dark:group-hover:text-zinc-300">
@@ -231,10 +198,6 @@ const BlogSection = memo(function BlogSection({
     </motion.section>
   )
 })
-
-// ============================================================================
-// Main Component
-// ============================================================================
 
 export default function PersonalClient({ posts }: PersonalClientProps) {
   return (

@@ -6,10 +6,6 @@ import { Header } from './header'
 import { Footer } from './footer'
 import './globals.css'
 
-// ============================================================================
-// Viewport Configuration
-// ============================================================================
-
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -20,15 +16,11 @@ export const viewport: Viewport = {
   ],
 }
 
-// ============================================================================
-// Metadata Configuration
-// ============================================================================
-
 const SITE_CONFIG = {
   name: 'thom ★',
   url: 'https://thom.lol',
   description:
-    'Website pessoal de Thom, estudante em Portugal interessado em história, política e tecnologia.',
+    'bem-vindo ao meu espaço pessoal na internet. aqui partilho as minhas ideias sobre história, política, tecnologia e muito mais.',
   locale: 'pt_PT',
 } as const
 
@@ -78,16 +70,13 @@ export const metadata: Metadata = {
   },
 }
 
-// ============================================================================
-// Font Configuration
-// ============================================================================
-
 const geist = Geist({
   variable: '--font-geist',
   subsets: ['latin'],
   display: 'swap',
   preload: true,
   adjustFontFallback: true,
+  weight: ['400', '500', '600'],
 })
 
 const geistMono = Geist_Mono({
@@ -96,11 +85,8 @@ const geistMono = Geist_Mono({
   display: 'swap',
   preload: true,
   adjustFontFallback: true,
+  weight: ['400', '500'],
 })
-
-// ============================================================================
-// Layout Component
-// ============================================================================
 
 interface RootLayoutProps {
   children: ReactNode
@@ -109,6 +95,14 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang={SITE_CONFIG.locale} suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className={`${geist.variable} ${geistMono.variable} min-h-screen bg-white font-sans tracking-tight text-zinc-900 antialiased transition-colors dark:bg-zinc-950 dark:text-zinc-100`}
       >
@@ -118,9 +112,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange={false}
           storageKey="thom-theme"
+          enableColorScheme
         >
           <div className="flex min-h-screen flex-col">
-            {/* Skip to main content link for accessibility */}
             <a
               href="#main-content"
               className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:rounded-md focus-visible:bg-zinc-900 focus-visible:px-4 focus-visible:py-2 focus-visible:text-white focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:bg-zinc-100 dark:focus-visible:text-zinc-900"

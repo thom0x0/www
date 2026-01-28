@@ -11,23 +11,6 @@ export type SocialLink = {
   icon: string
 }
 
-/* blog */
-
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    uid: '1',
-    title: 'sobre escrever',
-    description: 'por que gosto de colocar pensamentos em palavras.',
-    link: '/blog/sobre-escrever',
-  },
-  {
-    uid: '2',
-    title: 'história e repetição',
-    description: 'algumas coisas mudam, outras nem tanto.',
-    link: '/blog/historia-e-repeticao',
-  },
-]
-
 /* social */
 
 export const SOCIAL_LINKS: SocialLink[] = [

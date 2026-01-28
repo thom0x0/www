@@ -5,10 +5,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { TextEffect } from '@/components/ui/text-effect'
 
-// ============================================================================
-// Constants
-// ============================================================================
-
 const AVATAR_CONFIG = {
   src: '/src/avatar.webp',
   alt: 'Avatar de Thom',
@@ -20,10 +16,6 @@ const SITE_INFO = {
   tagline:
     "In a world without life and death, people who don't know when to give up are unstoppable.",
 } as const
-
-// ============================================================================
-// Avatar Component
-// ============================================================================
 
 const Avatar = memo(function Avatar() {
   return (
@@ -39,10 +31,6 @@ const Avatar = memo(function Avatar() {
     />
   )
 })
-
-// ============================================================================
-// Site Identity Component
-// ============================================================================
 
 const SiteIdentity = memo(function SiteIdentity() {
   return (
@@ -67,11 +55,6 @@ const SiteIdentity = memo(function SiteIdentity() {
     </div>
   )
 })
-
-// ============================================================================
-// Header Component
-// ============================================================================
-
 export const Header = memo(function Header() {
   return (
     <header
