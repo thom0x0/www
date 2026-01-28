@@ -59,11 +59,7 @@ const CopyButton = memo(function CopyButton() {
 
   useEffect(() => {
     if (!copied) return
-
-    const timer = setTimeout(() => {
-      setCopied(false)
-    }, COPY_TIMEOUT_MS)
-
+    const timer = setTimeout(() => setCopied(false), COPY_TIMEOUT_MS)
     return () => clearTimeout(timer)
   }, [copied])
 
@@ -73,23 +69,16 @@ const CopyButton = memo(function CopyButton() {
     try {
       await navigator.clipboard.writeText(url)
       setCopied(true)
-    } catch (error) {
-      console.error('Erro ao copiar link:', error)
-
-      // Fallback para navegadores mais antigos
-      try {
-        const textArea = document.createElement('textarea')
-        textArea.value = url
-        textArea.style.position = 'fixed'
-        textArea.style.opacity = '0'
-        document.body.appendChild(textArea)
-        textArea.select()
-        document.execCommand('copy')
-        document.body.removeChild(textArea)
-        setCopied(true)
-      } catch (fallbackError) {
-        console.error('Fallback copy também falhou:', fallbackError)
-      }
+    } catch {
+      const textArea = document.createElement('textarea')
+      textArea.value = url
+      textArea.style.position = 'fixed'
+      textArea.style.opacity = '0'
+      document.body.appendChild(textArea)
+      textArea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textArea)
+      setCopied(true)
     }
   }, [url])
 
@@ -105,15 +94,12 @@ const CopyButton = memo(function CopyButton() {
       disabled={!url}
       className="group flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-xs font-medium text-zinc-600 shadow-sm ring-1 ring-zinc-900/5 transition-colors outline-none hover:bg-zinc-50 hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-900 dark:text-zinc-400 dark:ring-white/10 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
     >
-      {copied ? (
-        <CheckIcon className="h-3.5 w-3.5" aria-hidden="true" />
-      ) : (
-        <LinkIcon className="h-3.5 w-3.5" aria-hidden="true" />
-      )}
+      {copied ? <CheckIcon className="h-3.5 w-3.5" aria-hidden="true" /> : <LinkIcon className="h-3.5 w-3.5" aria-hidden="true" />}
       <TextMorph className="min-w-[52px]">{buttonText}</TextMorph>
     </button>
   )
 })
+
 const GradientOverlay = memo(function GradientOverlay() {
   return (
     <div
@@ -125,14 +111,12 @@ const GradientOverlay = memo(function GradientOverlay() {
 
 const ArticleActions = memo(function ArticleActions() {
   return (
-    <aside
-      className="fixed top-20 right-4 z-20 sm:right-6 lg:right-8"
-      aria-label="Ações do artigo"
-    >
+    <aside className="fixed top-20 right-4 z-20 sm:right-6 lg:right-8" aria-label="Ações do artigo">
       <CopyButton />
     </aside>
   )
 })
+
 interface LayoutBlogPostProps {
   children: ReactNode
 }
@@ -141,14 +125,8 @@ export default function LayoutBlogPost({ children }: LayoutBlogPostProps) {
   return (
     <>
       <GradientOverlay />
-
-      <ScrollProgress
-        className="fixed top-0 left-0 z-20 h-0.5 bg-zinc-400 dark:bg-zinc-600"
-        springOptions={{ bounce: 0, stiffness: 200, damping: 30 }}
-      />
-
+      <ScrollProgress className="fixed top-0 left-0 z-20 h-0.5 bg-zinc-400 dark:bg-zinc-600" springOptions={{ bounce: 0, stiffness: 200, damping: 30 }} />
       <ArticleActions />
-
       <main className="relative mx-auto mt-16 max-w-2xl px-4 pb-24 sm:px-6 lg:px-8">
         <article className={PROSE_CLASSES}>{children}</article>
       </main>

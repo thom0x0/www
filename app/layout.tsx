@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { ThemeProvider } from 'next-themes'
 import { Header } from './header'
 import { Footer } from './footer'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 
 export const viewport: Viewport = {
@@ -26,9 +27,7 @@ const SITE_CONFIG = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
-  alternates: {
-    canonical: '/',
-  },
+  alternates: { canonical: '/' },
   title: {
     default: SITE_CONFIG.name,
     template: `%s · thom`,
@@ -44,6 +43,28 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'thom' }],
   creator: 'thom',
+  manifest: '/manifest.json',
+  icons: {
+    icon: [
+      {
+        url: '/src/favicons/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/src/favicons/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+    ],
+    apple: [
+      {
+        url: '/src/favicons/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
   openGraph: {
     type: 'website',
     locale: SITE_CONFIG.locale,
@@ -106,6 +127,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={`${geist.variable} ${geistMono.variable} min-h-screen bg-white font-sans tracking-tight text-zinc-900 antialiased transition-colors dark:bg-zinc-950 dark:text-zinc-100`}
       >
+        <SpeedInsights />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

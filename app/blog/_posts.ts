@@ -14,24 +14,15 @@ let cachedPosts: BlogPost[] | null = null
 let lastCacheTime: number | null = null
 const CACHE_TTL = 60_000
 
-function extractMetadataFromMDX(content: string): {
-  title?: string
-  description?: string
-} {
+function extractMetadataFromMDX(content: string): { title?: string; description?: string } {
   const slice = content.slice(0, 2000)
-
-  const metadataMatch = slice.match(
-    /export\s+const\s+metadata\s*=\s*{([\s\S]*?)}\s*/m,
-  )
+  const metadataMatch = slice.match(/export\s+const\s+metadata\s*=\s*{([\s\S]*?)}\s*/m)
 
   if (!metadataMatch) return {}
 
   const metadataBlock = metadataMatch[1]
-
   const titleMatch = metadataBlock.match(/title:\s*['"`]([^'"`]+)['"`]/)
-  const descriptionMatch = metadataBlock.match(
-    /description:\s*['"`]([^'"`]+)['"`]/,
-  )
+  const descriptionMatch = metadataBlock.match(/description:\s*['"`]([^'"`]+)['"`]/)
 
   return {
     title: titleMatch?.[1],
@@ -55,12 +46,7 @@ function readPost(slug: string): BlogPost | null {
 }
 
 export function getAllPosts(): BlogPost[] {
-  if (
-    process.env.NODE_ENV === 'development' &&
-    cachedPosts &&
-    lastCacheTime &&
-    Date.now() - lastCacheTime < CACHE_TTL
-  ) {
+  if (process.env.NODE_ENV === 'development' && cachedPosts && lastCacheTime && Date.now() - lastCacheTime < CACHE_TTL) {
     return cachedPosts
   }
 
@@ -68,16 +54,9 @@ export function getAllPosts(): BlogPost[] {
 
   const folders = fs
     .readdirSync(BLOG_PATH, { withFileTypes: true })
-    .filter(
-      (dir) =>
-        dir.isDirectory() &&
-        !dir.name.startsWith('_') &&
-        !dir.name.startsWith('.'),
-    )
+    .filter((dir) => dir.isDirectory() && !dir.name.startsWith('_') && !dir.name.startsWith('.'))
 
-  const posts = folders
-    .map((folder) => readPost(folder.name))
-    .filter((p): p is BlogPost => Boolean(p))
+  const posts = folders.map((folder) => readPost(folder.name)).filter((p): p is BlogPost => Boolean(p))
 
   posts.sort((a, b) => a.title.localeCompare(b.title, 'pt'))
 

@@ -4,7 +4,6 @@ const withMDX = nextMDX({
   extension: /\.mdx?$/,
 })
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
 
@@ -15,7 +14,7 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
 
-  reactStrictMode: false,
+  reactStrictMode: true,
   compress: true,
   productionBrowserSourceMaps: false,
 
@@ -27,38 +26,19 @@ const nextConfig = {
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin',
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()',
-          },
+          { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
         ],
       },
       {
         source: '/src/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
     ]
   },
 
   experimental: {
     optimizePackageImports: ['@iconify/react', 'lucide-react', 'motion/react'],
-  },
-
-  async rewrites() {
-    return []
-  },
-
-  async redirects() {
-    return []
   },
 }
 
