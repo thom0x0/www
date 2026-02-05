@@ -1,37 +1,37 @@
 # 📝 thom.lol
 
-repo do meu site pessoal: um lugar para escrever, organizar ideias e guardar coisas do dia a dia.
+repository for my personal website: a place to write, organize ideas, and keep everyday notes.
 
-## 📦 stack rápida
-- Next.js 15 (App Router) + React 19
-- TypeScript + Tailwind CSS v4
-- MDX (com sugar-high para syntax highlight)
-- Sanity CMS + Studio em `/studio` (protegido por basic auth)
+## 📦 quick stack
+- next.js 15 (app router) + react 19
+- typescript + tailwind css v4
+- mdx (with sugar-high for syntax highlighting)
+- sanity cms + studio at `/studio` (protected with basic auth)
 
-## ✨ funcionalidades
-- homepage animada com banner, lista de interesses e links sociais
-- blog com busca, filtro por tags e cards com data/autor
-- posts em MDX com componente de capa (`<Cover />`) e highlight de código
-- tema claro/escuro e layout responsivo
-- revalidação via webhook em `POST /api/revalidate`
+## ✨ features
+- animated homepage with banner, interests list, and social links
+- blog with search, tag filtering, and post cards (date/author)
+- mdx posts with a custom cover component (`<cover />`) and code highlighting
+- light/dark theme and responsive layout
+- webhook revalidation via `post /api/revalidate`
 
-## 🚀 como rodar local
-1) instalar deps: `bun install` (ou `npm install`)
-2) criar `.env.local` com:
-   - `NEXT_PUBLIC_SANITY_PROJECT_ID`
-   - `NEXT_PUBLIC_SANITY_DATASET` (ex: `production`)
-   - `SANITY_API_TOKEN` (para o webhook de revalidate)
-   - `STUDIO_USER` e `STUDIO_PASS` (proteção do `/studio`)
-3) subir: `bun run dev` (ou `npm run dev`)
+## 🚀 running locally
+1) install dependencies: `bun install` (or `npm install`)
+2) create `.env.local` with:
+   - `next_public_sanity_project_id`
+   - `next_public_sanity_dataset` (e.g. `production`)
+   - `sanity_api_token` (for the revalidate webhook)
+   - `studio_user` and `studio_pass` (to protect `/studio`)
+3) start: `bun run dev` (or `npm run dev`)
 
-scripts úteis: `bun run lint`, `bun run type-check`, `bun run build`, `bun run analyze`.
+useful scripts: `bun run lint`, `bun run type-check`, `bun run build`, `bun run analyze`.
 
-## 🗂️ organização rápida
-- `app/(site)`: páginas públicas (`/`, `/blog`, posts)
-- `app/studio`: Sanity Studio embutido
-- `lib/sanity`: config, queries e tipos do CMS
-- `components/ui`: micro animações (background, magnetic, etc.)
-- `sanity/schemas`: models de `post`, `tag`, `author`, `blockContent`
+## 🗂️ project structure
+- `app/(site)`: public pages (`/`, `/blog`, posts)
+- `app/studio`: embedded sanity studio
+- `lib/sanity`: cms config, queries, and types
+- `components/ui`: micro animations (background, magnetic, etc.)
+- `sanity/schemas`: models for `post`, `tag`, `author`, `blockContent`
 
-## 👋 créditos
-projeto adaptado a partir do template [Nim](https://github.com/ibelick/nim?tab=readme-ov-file). fui ajustando aos poucos para ficar com a minha cara. :)
+## 👋 credits
+project adapted from the [nim](https://github.com/ibelick/nim?tab=readme-ov-file) template, gradually customized to match my own style :)
